@@ -2,148 +2,63 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TruthLens - Fake News Detector</title>
-  <style>
-    body{font-family:Arial, sans-serif;background:#0b0b0f;color:#e9eef5;margin:0}
-    header{background:#12121a;padding:22px 16px;text-align:center;border-bottom:1px solid #1f2230}
-    h1{margin:0;font-size:28px}
-    p.sub{margin:6px 0 0;color:#9aa3b2}
-    .wrap{max-width:980px;margin:0 auto;padding:16px}
-    .grid{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
-    .card{background:#12121a;border:1px solid #1f2230;border-radius:14px;padding:16px;box-shadow:0 6px 18px rgba(0,0,0,.25)}
-    .card h2{margin:0 0 8px;font-size:18px}
-    input[type="text"],input[type="file"]{width:100%;padding:10px;border-radius:10px;border:1px solid #2a2e3f;background:#0f1118;color:#e9eef5}
-    button{width:100%;margin-top:10px;padding:10px;border:0;border-radius:10px;background:#4f46e5;color:#fff;font-weight:600}
-    button:hover{opacity:.92;cursor:pointer}
-    .result{margin-top:10px;padding:10px;border-radius:10px;background:#0f1118;border:1px solid #2a2e3f;min-height:44px}
-    footer{padding:18px;text-align:center;color:#9aa3b2}
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TruthLens – Fake News & AI Video Detector</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-  <header>
-    <h1>📰 TruthLens</h1>
-    <p class="sub">AI-powered Fake News & Deepfake Detector (Hackathon demo)</p>
-  </header>
+<body class="bg-gray-900 text-white font-sans">
+  <!-- Navbar -->
+  <nav class="flex justify-between items-center p-4 bg-gray-800 shadow-md">
+    <h1 class="text-2xl font-bold text-blue-400">TruthLens</h1>
+    <div class="space-x-6">
+      <a href="#features" class="hover:text-blue-400">Features</a>
+      <a href="#demo" class="hover:text-blue-400">Demo</a>
+      <a href="#about" class="hover:text-blue-400">About</a>
+    </div>
+  </nav>
 
-  <div class="wrap">
-    <div class="grid">
-      <div class="card">
-        <h2>📝 Check News Headline</h2>
-        <input id="headline" type="text" placeholder="Paste headline here…" />
-        <button onclick="checkHeadline()">Check</button>
-        <div id="headlineOut" class="result"></div>
+  <!-- Hero Section -->
+  <section class="text-center py-20 px-6">
+    <h2 class="text-4xl font-extrabold text-blue-400">Fake News & AI Video Detector</h2>
+    <p class="mt-4 text-lg text-gray-300">
+      Verify text, photos, and videos instantly. Detect truth in seconds.
+    </p>
+    <a href="#demo" class="mt-6 inline-block bg-blue-500 text-white px-6 py-3 rounded-xl shadow-lg hover:bg-blue-600">Try Now</a>
+  </section>
+
+  <!-- Features -->
+  <section id="features" class="py-16 px-8 bg-gray-800 rounded-2xl mx-4">
+    <h3 class="text-3xl font-bold text-center mb-10">Features</h3>
+    <div class="grid md:grid-cols-3 gap-8">
+      <div class="bg-gray-700 p-6 rounded-xl shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold mb-3">📰 Fake News Headlines</h4>
+        <p>Enter text or headlines and check if it’s fake or trustworthy.</p>
       </div>
-
-      <div class="card">
-        <h2>🖼️ Check Image</h2>
-        <input id="imgFile" type="file" accept="image/*" />
-        <button onclick="checkImage()">Check</button>
-        <div id="imgOut" class="result"></div>
+      <div class="bg-gray-700 p-6 rounded-xl shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold mb-3">🖼️ Image Authenticity</h4>
+        <p>Upload an image and detect if it’s AI-generated or edited.</p>
       </div>
-
-      <div class="card">
-        <h2>🎥 Check Video</h2>
-        <input id="vidFile" type="file" accept="video/*" />
-        <button onclick="checkVideo()">Check</button>
-        <div id="vidOut" class="result"></div>
+      <div class="bg-gray-700 p-6 rounded-xl shadow hover:scale-105 transition">
+        <h4 class="text-xl font-semibold mb-3">🎥 Deepfake Video Detection</h4>
+        <p>Analyze videos to detect deepfakes and AI-generated content.</p>
       </div>
     </div>
-  </div>
+  </section>
 
-  <footer>⚡ Demo UI only — models can be wired later to a backend/API.</footer>
+  <!-- Demo Section -->
+  <section id="demo" class="py-20 px-8 text-center">
+    <h3 class="text-3xl font-bold mb-6">Try It Out</h3>
+    <p class="mb-4 text-gray-300">Paste a news headline or upload a file.</p>
+    <input type="text" placeholder="Enter news text..." class="w-80 px-4 py-2 rounded-lg text-black" />
+    <br /><br />
+    <input type="file" class="mb-4 text-gray-300" />
+    <br />
+    <button class="bg-blue-500 px-6 py-3 rounded-lg shadow hover:bg-blue-600">Check</button>
+  </section>
 
-  <script>
-    // Simple demo logic so judges can click & see responses.
-    function checkHeadline(){
-      const el = document.getElementById('headline');
-      const out = document.getElementById('headlineOut');
-      const txt = (el.value||'').trim();
-      if(txt.length < 6){ out.textContent = '⚠️ Please enter a proper headline.'; return; }
-      // Demo scoring
-      const sensational = /(shocking|breaking|exposed|secret|miracle|alien|free money|guaranteed)/i.test(txt);
-      out.textContent = sensational
-        ? '❌ Possibly Fake / Sensational (demo). Use fact-check link below.'
-        : '✅ Looks reasonable (demo). Verify with trusted sources.';
-      // Add quick verify link
-      const link = document.createElement('a');
-      link.href = 'https://news.google.com/search?q=' + encodeURIComponent(txt);
-      link.target = '_blank';
-      link.textContent = ' 🔎 Verify on Google News';
-      out.appendChild(document.createElement('br'));
-      out.appendChild(link);
-    }
-
-    function checkImage(){
-      const file = document.getElementById('imgFile').files[0];
-      const out  = document.getElementById('imgOut');
-      if(!file){ out.textContent = '⚠️ Please upload an image.'; return; }
-      // Demo response
-      out.textContent = '🖼️ Image received. Running AI checks… (demo)\nResult: Likely Real (78%)';
-    }
-
-    function checkVideo(){
-      const file = document.getElementById('vidFile').files[0];
-      const out  = document.getElementById('vidOut');
-      if(!file){ out.textContent = '⚠️ Please upload a short video (≤20s).'; return; }
-      out.textContent = '🎥 Video received. Sampling frames… (demo)\nResult: Deepfake Likely (85%)';
-    }
-  </script>
-</body>
-</html>
-      <div class="card">
-        <h2>🖼️ Check Image</h2>
-        <input id="imgFile" type="file" accept="image/*" />
-        <button onclick="checkImage()">Check</button>
-        <div id="imgOut" class="result"></div>
-      </div>
-
-      <div class="card">
-        <h2>🎥 Check Video</h2>
-        <input id="vidFile" type="file" accept="video/*" />
-        <button onclick="checkVideo()">Check</button>
-        <div id="vidOut" class="result"></div>
-      </div>
-    </div>
-  </div>
-
-  <footer>⚡ Demo UI only — models can be wired later to a backend/API.</footer>
-
-  <script>
-    // Simple demo logic so judges can click & see responses.
-    function checkHeadline(){
-      const el = document.getElementById('headline');
-      const out = document.getElementById('headlineOut');
-      const txt = (el.value||'').trim();
-      if(txt.length < 6){ out.textContent = '⚠️ Please enter a proper headline.'; return; }
-      // Demo scoring
-      const sensational = /(shocking|breaking|exposed|secret|miracle|alien|free money|guaranteed)/i.test(txt);
-      out.textContent = sensational
-        ? '❌ Possibly Fake / Sensational (demo). Use fact-check link below.'
-        : '✅ Looks reasonable (demo). Verify with trusted sources.';
-      // Add quick verify link
-      const link = document.createElement('a');
-      link.href = 'https://news.google.com/search?q=' + encodeURIComponent(txt);
-      link.target = '_blank';
-      link.textContent = ' 🔎 Verify on Google News';
-      out.appendChild(document.createElement('br'));
-      out.appendChild(link);
-    }
-
-    function checkImage(){
-      const file = document.getElementById('imgFile').files[0];
-      const out  = document.getElementById('imgOut');
-      if(!file){ out.textContent = '⚠️ Please upload an image.'; return; }
-      // Demo response
-      out.textContent = '🖼️ Image received. Running AI checks… (demo)\nResult: Likely Real (78%)';
-    }
-
-    function checkVideo(){
-      const file = document.getElementById('vidFile').files[0];
-      const out  = document.getElementById('vidOut');
-      if(!file){ out.textContent = '⚠️ Please upload a short video (≤20s).'; return; }
-      out.textContent = '🎥 Video received. Sampling frames… (demo)\nResult: Deepfake Likely (85%)';
-    }
-  </script>
+  <!-- Footer -->
+  <footer class="bg-gray-800 py-6 text-center mt-10">
+    <p class="text-gray-400">Made with ❤️ at Hackathon by Munna</p>
+  </footer>
 </body>
 </html>
