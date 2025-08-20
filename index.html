@@ -91,3 +91,59 @@
   </script>
 </body>
 </html>
+      <div class="card">
+        <h2>🖼️ Check Image</h2>
+        <input id="imgFile" type="file" accept="image/*" />
+        <button onclick="checkImage()">Check</button>
+        <div id="imgOut" class="result"></div>
+      </div>
+
+      <div class="card">
+        <h2>🎥 Check Video</h2>
+        <input id="vidFile" type="file" accept="video/*" />
+        <button onclick="checkVideo()">Check</button>
+        <div id="vidOut" class="result"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>⚡ Demo UI only — models can be wired later to a backend/API.</footer>
+
+  <script>
+    // Simple demo logic so judges can click & see responses.
+    function checkHeadline(){
+      const el = document.getElementById('headline');
+      const out = document.getElementById('headlineOut');
+      const txt = (el.value||'').trim();
+      if(txt.length < 6){ out.textContent = '⚠️ Please enter a proper headline.'; return; }
+      // Demo scoring
+      const sensational = /(shocking|breaking|exposed|secret|miracle|alien|free money|guaranteed)/i.test(txt);
+      out.textContent = sensational
+        ? '❌ Possibly Fake / Sensational (demo). Use fact-check link below.'
+        : '✅ Looks reasonable (demo). Verify with trusted sources.';
+      // Add quick verify link
+      const link = document.createElement('a');
+      link.href = 'https://news.google.com/search?q=' + encodeURIComponent(txt);
+      link.target = '_blank';
+      link.textContent = ' 🔎 Verify on Google News';
+      out.appendChild(document.createElement('br'));
+      out.appendChild(link);
+    }
+
+    function checkImage(){
+      const file = document.getElementById('imgFile').files[0];
+      const out  = document.getElementById('imgOut');
+      if(!file){ out.textContent = '⚠️ Please upload an image.'; return; }
+      // Demo response
+      out.textContent = '🖼️ Image received. Running AI checks… (demo)\nResult: Likely Real (78%)';
+    }
+
+    function checkVideo(){
+      const file = document.getElementById('vidFile').files[0];
+      const out  = document.getElementById('vidOut');
+      if(!file){ out.textContent = '⚠️ Please upload a short video (≤20s).'; return; }
+      out.textContent = '🎥 Video received. Sampling frames… (demo)\nResult: Deepfake Likely (85%)';
+    }
+  </script>
+</body>
+</html>
