@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TruthLens - Fake News Detector</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111;
+      color: #eee;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background: #222;
+      padding: 20px;
+    }
+    .card {
+      background: #1e1e1e;
+      margin: 20px auto;
+      padding: 20px;
+      width: 90%;
+      max-width: 400px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px #444;
+    }
+    input, button {
+      margin: 10px;
+      padding: 10px;
+      width: 80%;
+    }
+    button {
+      background: #28a745;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+    button:hover {
+      background: #218838;
+    }
+    footer {
+      margin-top: 20px;
+      padding: 10px;
+      background: #222;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>📰 TruthLens</h1>
+    <p>AI Powered Fake News & Deepfake Detector</p>
+  </header>
+
+  <main>
+    <section class="card">
+      <h2>Check News Headlines</h2>
+      <input type="text" id="headlineInput" placeholder="Paste headline here...">
+      <button onclick="checkHeadline()">Check</button>
+      <p id="headlineResult"></p>
+    </section>
+
+    <section class="card">
+      <h2>Check Images</h2>
+      <input type="file" id="imageInput">
+      <button onclick="checkImage()">Check</button>
+      <p id="imageResult"></p>
+    </section>
+
+    <section class="card">
+      <h2>Check Videos</h2>
+      <input type="file" id="videoInput">
+      <button onclick="checkVideo()">Check</button>
+      <p id="videoResult"></p>
+    </section>
+  </main>
+
+  <footer>
+    <p>⚡ Powered by Free AI APIs</p>
+  </footer>
+
+  <script>
+    function checkHeadline() {
+      let text = document.getElementById("headlineInput").value;
+      let result = document.getElementById("headlineResult");
+      if (text.length < 5) {
+        result.innerText = "⚠️ Please enter a proper headline!";
+      } else {
+        result.innerText = "✅ This headline seems reliable (demo).";
+      }
+    }
+
+    function checkImage() {
+      let file = document.getElementById("imageInput").files[0];
+      let result = document.getElementById("imageResult");
+      if (!file) {
+        result.innerText = "⚠️ Please upload an image!";
+      } else {
+        result.innerText = "🖼️ Image uploaded. Fake-check in progress... (demo)";
+      }
+    }
+
+    function checkVideo() {
+      let file = document.getElementById("videoInput").files[0];
+      let result = document.getElementById("videoResult");
+      if (!file) {
+        result.innerText = "⚠️ Please upload a video!";
+      } else {
+        result.innerText = "🎥 Video uploaded. Deepfake check running... (demo)";
+      }
+    }
+  </script>
+</body>
+</html>
